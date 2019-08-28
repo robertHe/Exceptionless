@@ -34,7 +34,9 @@ az aks browse --resource-group $RESOURCE_GROUP --name $CLUSTER
 
 # or
 kubectl proxy
-# http://localhost:8001/api/v1/namespaces/kube-system/services/kubernetes-dashboard/proxy/#!/cluster?namespace=default
+# get the admin user secret
+kubectl -n kube-system describe secret admin-user-token-n6snp
+# http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
 
 # install helm
 brew install kubernetes-helm
