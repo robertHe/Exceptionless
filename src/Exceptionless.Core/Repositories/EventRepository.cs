@@ -250,22 +250,9 @@ namespace Exceptionless.Core.Repositories {
         }
         
         private ScriptPatch GetIsFixedScriptPatch(bool isFixed) {
-            const string script = @"
-Instant parseDate(def dt) {
-  if (dt != null) {
-    try {
-      return Instant.parse(dt);
-    } catch(DateTimeParseException e) {}
-  }
-  return Instant.MIN;
-}
-
-ctx._source.is_fixed = params.is_fixed;
-if (parseDate(ctx._source.updated_utc).isBefore(parseDate(params.updatedUtc))) {
-  ctx._source.updated_utc = params.updatedUtc;
-}";
+            const string script = "ctx._source.is_fixed = params.is_fixed; ctx._source.updated_utc = params.updatedUtc;";
             
-            return new ScriptPatch(script.TrimScript()) { 
+            return new ScriptPatch(script) { 
                 Params = new Dictionary<string, object> {
                     { "is_fixed", isFixed },
                     { "updatedUtc", SystemClock.UtcNow }
@@ -274,22 +261,9 @@ if (parseDate(ctx._source.updated_utc).isBefore(parseDate(params.updatedUtc))) {
         }
 
         private ScriptPatch GetIsHiddenScriptPatch(bool isHidden) {
-            const string script = @"
-Instant parseDate(def dt) {
-  if (dt != null) {
-    try {
-      return Instant.parse(dt);
-    } catch(DateTimeParseException e) {}
-  }
-  return Instant.MIN;
-}
-
-ctx._source.is_hidden = params.is_hidden;
-if (parseDate(ctx._source.updated_utc).isBefore(parseDate(params.updatedUtc))) {
-  ctx._source.updated_utc = params.updatedUtc;
-}";
+            const string script = "ctx._source.is_hidden = params.is_hidden; ctx._source.updated_utc = params.updatedUtc;";
             
-            return new ScriptPatch(script.TrimScript()) { 
+            return new ScriptPatch(script) { 
                 Params = new Dictionary<string, object> {
                     { "is_hidden", isHidden },
                     { "updatedUtc", SystemClock.UtcNow }
@@ -298,22 +272,9 @@ if (parseDate(ctx._source.updated_utc).isBefore(parseDate(params.updatedUtc))) {
         }
 
         private ScriptPatch GetIsDeletedScriptPatch(bool isDeleted) {
-            const string script = @"
-Instant parseDate(def dt) {
-  if (dt != null) {
-    try {
-      return Instant.parse(dt);
-    } catch(DateTimeParseException e) {}
-  }
-  return Instant.MIN;
-}
-
-ctx._source.is_deleted = params.is_deleted;
-if (parseDate(ctx._source.updated_utc).isBefore(parseDate(params.updatedUtc))) {
-  ctx._source.updated_utc = params.updatedUtc;
-}";
+            const string script = "ctx._source.is_deleted = params.is_deleted; ctx._source.updated_utc = params.updatedUtc;";
             
-            return new ScriptPatch(script.TrimScript()) { 
+            return new ScriptPatch(script) { 
                 Params = new Dictionary<string, object> {
                     { "is_deleted", isDeleted },
                     { "updatedUtc", SystemClock.UtcNow }
